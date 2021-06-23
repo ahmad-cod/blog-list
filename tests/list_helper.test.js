@@ -1,6 +1,6 @@
 const list_helper = require('../utils/list_helper')
 
-test('dummy returns 1', () => {
+test.only('dummy returns 1', () => {
     const blogs = []
 
     const result = list_helper.dummy(blogs)
