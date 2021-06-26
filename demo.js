@@ -17,3 +17,11 @@ const hashPassword = async (password, saltRounds = 10) => {
 };
 
 hashPassword('asdfgh').then(hash => console.log(hash))
+
+// const show = async () => {
+//    const hash = await hashPassword('asdfgh')
+
+//    return hash
+// }
+
+// console.log(show())

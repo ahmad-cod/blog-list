@@ -1,15 +1,27 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 
 const userSchema = new mongoose.Schema({
   username: String,
   name: String,
-  passwordHash: String,
+  password: String,
   blogs: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Note'
     }
   ],
+})
+
+userSchema.pre('save', async function (next) {
+  try {
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(this.password, salt)
+    this.password = hashedPassword
+    next()
+  } catch (e) {
+    next(e)
+  }
 })
 
 userSchema.set('toJSON', {
