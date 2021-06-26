@@ -2,13 +2,21 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
 const userSchema = new mongoose.Schema({
-  username: String,
+  username: {
+    type: String,
+    required: true,
+    minLength: 3
+  },
   name: String,
-  password: String,
+  password: {
+    type: String,
+    required: true,
+    minLength: 3
+  },
   blogs: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Note'
+      ref: 'Blog'
     }
   ],
 })
