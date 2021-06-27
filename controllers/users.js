@@ -3,9 +3,14 @@ const User = require('../models/user')
 const bcrypt = require('bcrypt')
 // const {hashPassword} = require('../utils/user_helper')
 
-usersRouter.get('/', async (request, response) => {
-    const users = await User.find({}).populate('blogs')
-    response.json(users)
+usersRouter.get('/', async (request, response, next) => {
+    try {
+        const users = await User.find({}).populate('blogs')
+        return response.json(users)
+    } catch (e) {
+     console.log(e)
+     next(e)
+    }
 })
 
 usersRouter.post('/', async (request, response) => {
@@ -22,7 +27,7 @@ usersRouter.post('/', async (request, response) => {
     })
 
     const savedUser = await user.save()
-    response.json(savedUser)
+    return response.json(savedUser)
 })
 
 module.exports = usersRouter
