@@ -16,10 +16,11 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
 app.use(cors())
 app.use(express.json())
 
+
 app.use('/api/login', loginRoute)
 
-app.use(middleware.tokenExtractor)
 app.use(middleware.requestLogger)
+app.use(middleware.tokenExtractor)
 app.use(middleware.userExtractor)
 app.use('/api/blogs', blogRoutes)
 app.use('/api/users', userRoutes)

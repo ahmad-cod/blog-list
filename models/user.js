@@ -22,14 +22,15 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.pre('save', async function (next) {
-  try {
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(this.password, salt)
-    this.password = hashedPassword
-    next()
-  } catch (e) {
-    next(e)
-  }
+  if (!this.isModified('password')) return next()
+    try {
+      const salt = await bcrypt.genSalt(10)
+      this.password = await bcrypt.hash(this.password, salt)
+      
+      next()
+    } catch (e) {
+      next(e)
+    }
 })
 
 userSchema.set('toJSON', {
