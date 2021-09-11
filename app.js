@@ -25,6 +25,12 @@ app.use(middleware.userExtractor)
 app.use('/api/blogs', blogRoutes)
 app.use('/api/users', userRoutes)
 
+if(process.env.NODE_ENV == 'test'){
+  const testingRoute = require('./controllers/testing')
+
+  app.use('/api/testing', testingRoute)
+}
+
 app.use(middleware.unknownRoutes)
 app.use(middleware.errorHandler)
 

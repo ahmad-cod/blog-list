@@ -23,13 +23,14 @@ router.post('/', async (request, response) => {
   if(!decodedToken.id){
     return response.status(401).json({error: 'token missing or invalid'})
   }
+  console.log('decodedToken:', decodedToken)
   const user = await User.findById(decodedToken.id)
 
   const {title, url} = request.body
   if(!title || title === " ") response.status(400).end()
   if(!url || url === " ") response.status(400).end()
 
-  console.log(user)
+  console.log('user', user)
   const likes = request.body.likes || 0
 
   const blog = new Blog({
@@ -46,7 +47,7 @@ router.post('/', async (request, response) => {
   response.status(201).json(savedBlog)
 })
 
-router.delete('/:id', async (request, response) => {
+router.delete('/:id', async (request, response, next) => {
   if(!request.token) {
     return response.status(401).json({error: 'token missing or invalid'})
   }

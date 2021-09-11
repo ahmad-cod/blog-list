@@ -9,15 +9,16 @@ router.post('/', async (req, res) => {
     try {
         // const users = await User.find({})
         const user = await User.findOne({ username })
-        console.log(username)
-        // console.log(users)
+        if(!user) return res.status(400).json({error: 'invalid username or password'})
+        console.log('username', username)
+        
         const passwordCompare = await bcrypt.compare(password, user.password)
         console.log('comparison', passwordCompare)
         const passwordCorrect = user === null ? false : passwordCompare
-        console.log('secret', process.env.SECRET)
+        // console.log('secret', process.env.SECRET)
         console.log(user)
         console.log(passwordCorrect, password)
-        if(!(user && passwordCorrect)){
+        if(!passwordCorrect){
             console.log('invalid username or password')
             return res.status(400).json({error: 'invalid username or password'})
         }
