@@ -15,6 +15,7 @@ router.get('/:id', async (request, response) => {
   })
   
 router.post('/', async (request, response) => {
+  // await Blog.deleteMany()
   console.log(request.token)
   if(!request.token) {
     return response.status(401).json({error: 'token missing or invalid'})
@@ -36,7 +37,7 @@ router.post('/', async (request, response) => {
   const blog = new Blog({
     ...request.body,
     likes,
-    user: user._id
+    user
   })
 
   const savedBlog = await blog.save()
@@ -70,10 +71,12 @@ router.delete('/:id', async (request, response, next) => {
 })
 
 router.put('/:id', async (request, response) => {
+  console.log(request.body)
   const { likes } = request.body
+  const { comments } = request.body
   console.log('likes', likes)
   // console.log('body', request.body)
-  const blog = { likes }
+  const blog = { likes, comments }
   console.log('blog', blog)
   const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
   return response.json(updatedBlog)
