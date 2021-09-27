@@ -15,7 +15,6 @@ mongoose.connect('mongodb+srv://ahmad:22juneC@cluster0.cxs4b.mongodb.net/blog-li
  .catch(error => logger.error('error connection to MongoDB:', error.message))
 app.use(cors())
 app.use(express.json())
-app.use(express.static('build'))
 
 app.use('/api/login', loginRoute)
 
@@ -25,6 +24,9 @@ app.use(middleware.userExtractor)
 app.use('/api/blogs', blogRoutes)
 app.use('/api/users', userRoutes)
 
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static('build'))
+}
 if(process.env.NODE_ENV == 'test'){
   const testingRoute = require('./controllers/testing')
 
