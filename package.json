@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build:ui": "rm -rf build && cd ../bloglist-frontend/ && yarn build --prod && cp -r build ../blogs-list",
     "start": "NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "deploy": "git push heroku master",
