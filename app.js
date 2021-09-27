@@ -10,7 +10,7 @@ const config = require('./utils/config')
 const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
 
-mongoose.connect('mongodb+srv://ahmad:22juneC@cluster0.cxs4b.mongodb.net/blog-list?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
  .then(() => logger.info('connected to MongoDB'))
  .catch(error => logger.error('error connection to MongoDB:', error.message))
 app.use(cors())
